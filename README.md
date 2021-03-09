@@ -37,12 +37,10 @@ It is possible to check if the processor has any mitication enabled against TAA 
 
 ## Compiling and running
 
-In order to use all the features of this code, it may be necessary to install make, gcc, python3, matplotlib. 
+In order to use all the features of this code, it may be necessary to install make and gcc. 
 For example in a machine with Ubuntu it is possible to install them:
 
 `$ apt-get install make gcc python3-pip` (May require sudo)
-
-`$ pip3 install matplotlib`
 
 ## Configuration
 
