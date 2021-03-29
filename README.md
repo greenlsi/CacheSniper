@@ -27,13 +27,15 @@ To check that 100 huge pages are indeed available:
 
 `$ cat /proc/meminfo | grep HugePages`
 
-Check if your cpu supports TSX
+Check if your cpu supports TSX. If the following command yields any results, it does. 
 
 `cat /proc/cpuinfo | grep rtm`
 
-It is possible to check if the processor has any mitication enabled against TAA by running:
+It is possible to check if the processor has any mitigation enabled against TAA by checking:
 
 `/sys/devices/system/cpu/vulnerabilities/tsx_async_abort`
+Unless it says "disabled", you are good to go.
+
 
 ## Compiling and running
 
@@ -85,11 +87,10 @@ BITS_NORMALPAGE -> log2(PAGESIZE), which can be checked using getconf PAGESIZE. 
 
 #### Options and calibration
 
-Different options can be configured in various source files, `example_code.c' and 'example_code_sync.c`
+Different options can be configured in various source files, `attack_tsx.c' 
 
 ```
 #define TIME_LIMIT 150         /*Time for main memory access, must be calibrated*/
-#define TIME_PRIME 650         /*Time for Prime, must be calibrated not entirely neccessary*/
 #define NUM_CANDIDATES 3 * CACHE_SET_SIZE *CACHE_SLICES
 #define RES_MEM (1UL * 1024 * 1024) * 4 * CACHE_SIZE
 ```
@@ -110,7 +111,7 @@ Only a `make` is required to build the static binary.
 
 `Warning:` It builds a shared library `libTable.so` . Since it is not in an standard location of the system, it will not
 be found, one easy way to make it available it is:
-export LD_LIBRARY_PATH=.
+`export LD_LIBRARY_PATH=.`
 
 ## How to use
 
@@ -122,7 +123,7 @@ Each of them needs to be launched on a different terminal.
 It executes the sample fake vulnerable application, it will prefetch and then use data. In order to execute it:
 
 ```
-./server -d detectionaddress -a targetaddress -t wait time -o outputfile -s ip address
+./server -d detectionaddress -a targetaddress -t waittime -o outputfile -s ip address
 ```
 
 #### Options
